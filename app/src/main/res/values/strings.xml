@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">HandNote</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="note_taking_app">Note Taking App</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+
+    <string name="create_note">Create Note</string>
+
+    <string name="no_note_title">Create Your First Note</string>
+    <string name="no_note_content">Add a note about anything (your thoughts on climate change, or your history essay) and share it with the world.</string>
+</resources>
