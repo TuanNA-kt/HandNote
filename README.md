@@ -1,4 +1,4 @@
-# NoteApp 📝
+# HandNote 📝
 
 A simple and lightweight note-taking app inspired by Google Keep. This is a personal project built with Kotlin and Jetpack components to help me learn more about Android development. It supports rich text editing, image attachments, reminders, and labels.
 
