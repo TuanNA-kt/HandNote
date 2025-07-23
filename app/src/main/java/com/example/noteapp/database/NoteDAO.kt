@@ -21,13 +21,16 @@ interface NoteDAO {
     @Delete
     suspend fun deleteNote(note: Note)
 
-    @Query("SELECT * FROM NOTES ORDER BY timestamp DESC ")
+    @Query("SELECT * FROM NOTES WHERE id = :id")
+    suspend fun getNoteById(id: String): Note?
+
+    @Query("SELECT * FROM NOTES ORDER BY created_at DESC ")
     fun getAllNotes(): Flow<List<Note>>
 
     @Query("""
         SELECT * FROM NOTES
-        WHERE LOWER(title) LIKE LOWER(:query) OR LOWER(body) LIKE LOWER(:query) 
-        ORDER BY timestamp DESC 
+        WHERE LOWER(title) LIKE LOWER(:query) OR LOWER(plain_text_content) LIKE LOWER(:query) 
+        ORDER BY created_at DESC 
     """)
     fun searchNote(query: String?): Flow<List<Note>>
 }

@@ -12,10 +12,18 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_updateFragment"
-            app:destination="@id/updateFragment" />
+            app:destination="@id/updateFragment"
+            />
         <action
             android:id="@+id/action_homeFragment_to_newNoteFragment"
             app:destination="@id/newNoteFragment" />
+
+        <argument
+            android:name="noteId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+
     </fragment>
     <fragment
         android:id="@+id/newNoteFragment"
@@ -25,6 +33,12 @@
         <action
             android:id="@+id/action_newNoteFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+
+        <argument
+            android:name="noteId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
     </fragment>
     <fragment
         android:id="@+id/updateFragment"

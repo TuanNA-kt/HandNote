@@ -19,7 +19,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
             override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
                 return oldItem.id == newItem.id &&
                         oldItem.title == newItem.title &&
-                        oldItem.body == newItem.body
+                        oldItem.htmlContent == newItem.htmlContent
             }
 
             override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
@@ -42,12 +42,12 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
         val color = Color.argb(255, Random.nextInt(256),
             Random.nextInt(256), Random.nextInt(256))
 
-        holder.itemBinding.titleTv.text = currentNote.title
-        holder.itemBinding.noteTv.text = currentNote.body
+        holder.itemBinding.tvTitle.text = currentNote.title
+        holder.itemBinding.noteTv.text = currentNote.htmlContent
         //holder.itemBinding.noteColor.setBackgroundColor(color)
 
         holder.itemView.setOnClickListener {
-            val direction = HomeFragmentDirections.actionHomeFragmentToUpdateFragment(currentNote)
+            val direction = HomeFragmentDirections.actionHomeFragmentToNewNoteFragment(currentNote.id)
             it.findNavController().navigate(direction)
         }
     }

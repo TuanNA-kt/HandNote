@@ -63,8 +63,10 @@ class HomeFragment : BaseFragmentBinding<FragmentHomeBinding>() {
 
     override fun registerListeners() {
         binding.fabAdd.setOnClickListener {
-            it.findNavController().navigate(R.id.action_homeFragment_to_newNoteFragment)
+            val action = HomeFragmentDirections.actionHomeFragmentToNewNoteFragment(null)
+            it.findNavController().navigate(action)
         }
+
     }
 
     override fun initializeData() {

@@ -16,6 +16,7 @@ navigationFragmentKtx = "2.9.1"
 navigationUiKtx = "2.9.1"
 
 [libraries]
+
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationSafeArgsGradlePlugin" }
 artifactid = { module = "groupId:artifactId", version.ref = "artifactid" }
