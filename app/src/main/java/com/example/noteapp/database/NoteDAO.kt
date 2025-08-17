@@ -27,6 +27,12 @@ interface NoteDAO {
     @Query("SELECT * FROM NOTES ORDER BY created_at DESC ")
     fun getAllNotes(): Flow<List<Note>>
 
+    @Query("SELECT * FROM NOTES WHERE is_pinned = 1 ORDER BY updated_at DESC")
+    fun getPinnedNotes(): Flow<List<Note>>
+
+    @Query("SELECT * FROM NOTES WHERE is_pinned = 0 ORDER BY updated_at DESC")
+    fun getUnpinnedNotes(): Flow<List<Note>>
+
     @Query("""
         SELECT * FROM NOTES
         WHERE LOWER(title) LIKE LOWER(:query) OR LOWER(plain_text_content) LIKE LOWER(:query) 

@@ -81,6 +81,8 @@ dependencies {
     //rich-text-editor
     implementation ("jp.wasabeef:richeditor-android:2.0.0")
 
+    //Glide
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

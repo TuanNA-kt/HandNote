@@ -24,20 +24,31 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Title" />
 
-        <TextView
-            android:id="@+id/note_tv"
+<!--        <TextView-->
+<!--            android:id="@+id/tvNote"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:maxHeight="170dp"-->
+<!--            android:padding="5dp"-->
+<!--            android:textSize="20sp"-->
+<!--            android:fontFamily="@font/nunito_regular"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/tvTitle"-->
+<!--            tools:text="Your note here" />-->
+
+        <jp.wasabeef.richeditor.RichEditor
+            android:id="@+id/editor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:maxHeight="170dp"
-            android:padding="5dp"
-            android:textSize="20sp"
-            android:fontFamily="@font/nunito_regular"
+            android:layout_marginVertical="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_tv"
-            tools:text="Your note here" />
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

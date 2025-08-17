@@ -14,6 +14,9 @@ class NoteRepository @Inject constructor(private val noteDao: NoteDAO) {
     suspend fun getNoteById(id: String) = noteDao.getNoteById(id)
 
     fun getAllNotes() = noteDao.getAllNotes()
+    fun getPinnedNotes() = noteDao.getPinnedNotes()
+    fun getUnpinnedNotes() = noteDao.getUnpinnedNotes()
+
     //fun searchNote(query: String) = noteDao.searchNote(query)
     fun searchNote(query: String) : Flow<List<Note>> {
         return if(query.isBlank()) {

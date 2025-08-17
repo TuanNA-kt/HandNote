@@ -32,7 +32,7 @@ class HomeFragment : BaseFragmentBinding<FragmentHomeBinding>() {
         // Observe notes
         viewLifecycleOwner.lifecycleScope.launch {
             noteViewModel.queriedNotes.collect { notes ->
-                noteAdapter.differ.submitList(notes)
+                noteAdapter.submitNotes(notes)
                 updateUI(notes)
             }
         }

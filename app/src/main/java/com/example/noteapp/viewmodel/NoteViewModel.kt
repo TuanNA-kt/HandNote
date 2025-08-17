@@ -38,6 +38,15 @@ class NoteViewModel @Inject constructor(private val noteRepository: NoteReposito
     private val _queriedNotes = MutableStateFlow<List<Note>>(emptyList())
     val queriedNotes: StateFlow<List<Note>> = _queriedNotes.asStateFlow()
 
+    private val _pinnedNotes = MutableStateFlow<List<Note>>(emptyList())
+    val pinnedNotes: StateFlow<List<Note>> = _pinnedNotes.asStateFlow()
+
+    private val _unpinnedNotes = MutableStateFlow<List<Note>>(emptyList())
+    val unpinnedNotes: StateFlow<List<Note>> = _unpinnedNotes.asStateFlow()
+
+    private val _isPinned = MutableStateFlow<Boolean>(false)
+    val isPinned: StateFlow<Boolean> = _isPinned.asStateFlow()
+
     private var searchJob: Job? = null
 
     fun setQuery(query: String) {
@@ -59,6 +68,15 @@ class NoteViewModel @Inject constructor(private val noteRepository: NoteReposito
                     _queriedNotes.value = notes
                     _isLoading.value = false
                 }
+
+                noteRepository.getPinnedNotes().collect { notes ->
+                    _pinnedNotes.value = notes
+                }
+
+                noteRepository.getUnpinnedNotes().collect { notes ->
+                    _unpinnedNotes.value = notes
+                }
+
             } catch (e: Exception) {
                 _isLoading.value = false
             }
@@ -95,6 +113,12 @@ class NoteViewModel @Inject constructor(private val noteRepository: NoteReposito
 
     fun updateNote(note: Note) = viewModelScope.launch {
         noteRepository.updateNote(note)
+    }
+
+    suspend fun togglePin(note: Note): Note {
+        val updatedNote = note.copy(isPinned = !note.isPinned)
+        updateNote(updatedNote)
+        return updatedNote
     }
 
     suspend fun getNoteById(id: String): Note? {

@@ -2,12 +2,15 @@ package com.example.noteapp.ui.component.newNote.fragment
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -19,6 +22,7 @@ import com.example.noteapp.viewmodel.NoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.richeditor.RichEditor
 import jp.wasabeef.richeditor.RichEditor.OnTextChangeListener
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -30,6 +34,7 @@ class NewNoteFragment : BaseFragmentBinding<FragmentNewNoteBinding>() {
     private var note: Note? = null
     private var originalTitle: String = ""
     private var originalContent: String = ""
+    private var isNotePinned = false
 
     override fun getContentViewId(): Int = R.layout.fragment_new_note
 
@@ -40,6 +45,21 @@ class NewNoteFragment : BaseFragmentBinding<FragmentNewNoteBinding>() {
     override fun registerListeners() {
         binding.ivBack.setOnClickListener {
             handleBackPressed()
+        }
+
+        binding.ivPin.setOnClickListener {
+            note?.let { currentNote ->
+                viewLifecycleOwner.lifecycleScope.launch {
+                    try {
+                        val updatedNote = noteViewModel.togglePin(currentNote)
+                        note = updatedNote // Update local reference
+                        updatePinUI(updatedNote.isPinned)
+                        showToast(if (updatedNote.isPinned) "Note pinned" else "Note unpinned")
+                    } catch (e: Exception) {
+                        showToast("Error updating pin status")
+                    }
+                }
+            }
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(this) {
@@ -56,16 +76,37 @@ class NewNoteFragment : BaseFragmentBinding<FragmentNewNoteBinding>() {
                     // Store original values for comparison
                     originalTitle = it.title
                     originalContent = it.htmlContent
+                    updatePinUI(it.isPinned)
                     updateEditor()
                 }
             }
         }
     }
 
+    private fun updatePinUI(isPinned: Boolean) {
+        val pinIcon = if (isPinned) {
+            R.drawable.ic_unpin // Show unpin icon when note is pinned
+        } else {
+            R.drawable.ic_pin   // Show pin icon when note is not pinned
+        }
+        binding.ivPin.setImageResource(pinIcon)
+    }
+
     private fun handleBackPressed() {
+//        val htmlContent = binding.editor.html ?: ""
+//        val (title, content) = extractTitleAndContentFromHtml(htmlContent)
+//        val plainTextContent = getPlainTextFromHtml(htmlContent)
+
         val htmlContent = binding.editor.html ?: ""
         val (title, content) = extractTitleAndContentFromHtml(htmlContent)
-        val plainTextContent = getPlainTextFromHtml(htmlContent)
+
+// tách theo <br>, bỏ phần tử đầu, nối lại
+        val plainTextContent = htmlContent
+            .split("<br>")
+            .drop(1)
+            .joinToString("<br>")
+
+        Log.d("SAVENOTE", htmlContent)
 
         if (hasContentChanged(title, htmlContent)) {
             if (title.isNotEmpty() || content.trim().isNotEmpty()) {
